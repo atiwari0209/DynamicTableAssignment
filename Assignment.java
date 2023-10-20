@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Assignment {
 	public static void main(String[] args) throws InterruptedException {
-		System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\Selenium\\chromedriver.exe");
+	System.setProperty("webdriver.chrome.driver", "C:\\Program Files\\Selenium\\chromedriver.exe");
         WebDriver driver = new ChromeDriver();
 		driver.get("https://testpages.herokuapp.com/styled/tag/dynamic-table.html");
         driver.manage().window().maximize();
@@ -27,14 +27,11 @@ public class Assignment {
         driver.findElement(By.xpath("//*[@id=\"jsondata\"]")).clear();
         driver.findElement(By.xpath("//*[@id=\"jsondata\"]")).sendKeys(jsonData);
         driver.findElement(By.id("refreshtable")).click();
-        //assertEquals(0, 0, 0)
         
-        // Grab the table
         WebElement table = driver.findElement(By.id("dynamictable"));
 
-        // Now get all the TR elements from the table
         List<WebElement> allRows = table.findElements(By.tagName("tr"));
-        // And iterate over them, getting the cells
+	
         for(int i=1;i<allRows.size();i++) {
         	JSONObject rowJson = jsonArray.getJSONObject(i-1);
         	String[] rowDataValue = {rowJson.getString("name"), String.valueOf(rowJson.getInt("age")),rowJson.getString("gender")};
@@ -44,12 +41,7 @@ public class Assignment {
         		WebElement cell = cells.get(j);
         		String cellText = cell.getText();
         		System.out.print(cellText + " ");
-        		//assertEquals(rowDataValue[j], cellText);
-        		try {
-        			assertEquals(rowDataValue[j], cellText);
-        		} catch(AssertionError error) {
-        			System.out.println(error.getMessage());
-        		}
+        		assertEquals(rowDataValue[j], cellText);
         	}
         	System.out.println();
         }
